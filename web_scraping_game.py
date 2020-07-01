@@ -2,8 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import random
 
-print('\n\n\n\n\n\n')
+print('\n' * 10)
 print('Give us a sec to scrape all the quotes for you :)')
+print('\n' * 21)
 
 _scraped = []
 next_page = "/"
@@ -26,36 +27,33 @@ while next_page:
     else:
         next_page = False
 
-answers = 5
+answers = 4
 wanna_play = True
 while wanna_play:
     quote = random.choice(_scraped)
     author = quote['author']
-    print('\n\n\'')
     print(quote['text'])
-    print('\n\n\'')
     while answers > 0:
         answer = input('Try to guess the author of this quote : \n')
         if answer != author:
             answers -= 1
             print(f'Nooo, that\'s not right. {answers} left')
-            if answers == 4:
+            if answers == 3:
                 letter = author[0]
                 print(f'Here\'s a hint! The first name of the author starts with {letter}')
-            if answers == 3:
+            elif answers == 2:
                 position = author.find(' ')
-                letter = quote['author'][position+1]
+                letter = author[position+1]
                 print(f'Here\'s a hint! The last name of the author starts with {letter}')
-            if answers == 0:
+            elif answers == 0:
                 print(f'You lost! The correct answer was {author}')
             
         else:
             print('Congratulations! That\'s right!')
             break
     wants_more = input('You wanna play again?')
-    print('\n')
     if wants_more.lower() in ['y', 'yes', 'yeah', 'sure']:
-        answers = 5
+        answers = 4
     else:
         print('Thanks for playing!')
         wanna_play = False
